@@ -1,0 +1,74 @@
+package BrotatoBuildPlanner.Modelo.Modifier;
+
+import BrotatoBuildPlanner.Modelo.Condition.Condition;
+import BrotatoBuildPlanner.Modelo.BuildContext;
+import BrotatoBuildPlanner.Modelo.Condition.StatCondition;
+import BrotatoBuildPlanner.Modelo.Stats.Stat;
+import BrotatoBuildPlanner.Modelo.Stats.Stats;
+
+/**
+ *
+ * @author Manuel
+ */
+public class Modifier {
+
+    private Stat stat;
+    private double value;
+    private ModifierType type;
+    private ModifierPriority priority;
+    private Condition condition;
+
+    public Modifier(Stat stat, double value, ModifierType type, ModifierPriority priority) {
+        this.stat = stat;
+        this.value = value;
+        this.type = type;
+        this.priority = priority;
+    }
+
+    public void setCondition(Condition condition) {
+        this.condition = condition;
+    }
+
+    public ModifierPriority getPriority() {
+        return priority;
+    }
+
+    public void apply(Stats stats, BuildContext context, ModifierContext modifierContext) {
+        
+        int times = 1;
+        if (condition != null) {
+            times = condition.getMultiplier(context, stats);
+            if(times == 0){
+                return;
+            }
+        }
+
+        double multiplier = modifierContext.getMultiplier(stat);
+        double modifiedValue = value * multiplier * times;
+
+        switch (type) {
+            case FLAT:
+                stats.addStat(stat, modifiedValue);
+                break;
+            case PERCENTAGE:
+                double current = stats.getStat(stat);
+                stats.addStat(stat, current * (modifiedValue / 100));
+                break;
+            case MULTIPLIER:
+                stats.multiplyStat(stat, modifiedValue);
+                break;
+        }
+    }
+
+    public Stat getStat() {
+        return stat;
+    }
+
+    public double getValue() {
+        return value;
+    }
+
+    public ModifierType getType() {
+        return type;
+    }
+}

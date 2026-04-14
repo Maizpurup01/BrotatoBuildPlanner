@@ -1,6 +1,7 @@
 package BrotatoBuildPlanner.Modelo.Stats;
 
 /**
+ * Enumeracion de los diferentes tipos de stats que hay en el juego
  *
  * @author Manuel
  */

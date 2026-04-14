@@ -3,14 +3,15 @@ package BrotatoBuildPlanner.Modelo.Item;
 import javax.swing.ImageIcon;
 
 /**
+ * Clase padre que engloba todos los campos que tienen en comun todos los tipos en BD(character, weapon, item, etc)
  *
  * @author Manuel
  */
 public class Items {
-    private String name;
-    private String description;
-    private ImageIcon image;
-    private int cuantity;
+    private String name; // nombre del objeto, arma...
+    private String description; // descripcion para el renderer
+    private ImageIcon image; // imagen para UI
+    private int cuantity; // cantidad maxima que se puede poseer de ese objeto en la build.
 
     public Items(String name, String description, ImageIcon image, int cuantity) {
         this.name = name;

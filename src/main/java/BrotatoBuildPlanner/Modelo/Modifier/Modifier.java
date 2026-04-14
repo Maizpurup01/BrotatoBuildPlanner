@@ -7,16 +7,17 @@ import BrotatoBuildPlanner.Modelo.Stats.Stat;
 import BrotatoBuildPlanner.Modelo.Stats.Stats;
 
 /**
+ * Clase en la que se convierte un registro de la tabla modifier en BD
  *
  * @author Manuel
  */
 public class Modifier {
 
-    private Stat stat;
-    private double value;
-    private ModifierType type;
-    private ModifierPriority priority;
-    private Condition condition;
+    private Stat stat; // estadistica que modifica
+    private double value; // valor de la estadistica que modifica(ej: 30.0)
+    private ModifierType type; // tipo del modificador(ver enum ModificerType)
+    private ModifierPriority priority; // prioridad del modificador(ver ModificerPriority)
+    private Condition condition; // condicion de que el modificador se aplique
 
     public Modifier(Stat stat, double value, ModifierType type, ModifierPriority priority) {
         this.stat = stat;

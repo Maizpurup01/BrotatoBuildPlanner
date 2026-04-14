@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Statement;
 
 /**
+ * Clase que gestiona las migraciones de la BD en local
  *
  * @author Manuel
  */

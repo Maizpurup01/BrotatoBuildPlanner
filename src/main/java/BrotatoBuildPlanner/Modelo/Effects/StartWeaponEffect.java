@@ -4,6 +4,7 @@ import BrotatoBuildPlanner.Modelo.BuildContext;
 import BrotatoBuildPlanner.Modelo.Weapon.Weapon;
 
 /**
+ * clase que gestionara los efectos iniciales de los personajes(ej: comienzas con un cuchillo)
  *
  * @author Manuel
  */

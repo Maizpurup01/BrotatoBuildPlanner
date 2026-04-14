@@ -7,6 +7,8 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 /**
+ * Esta clase se encarga de invocar un elemento visual que permita ver un 
+ * objeto con mas detalle al pasar el raton por encima en la lista
  *
  * @author Manuel
  */

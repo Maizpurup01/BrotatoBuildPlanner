@@ -5,9 +5,10 @@ import BrotatoBuildPlanner.Modelo.Weapon.Weapon;
 import java.util.List;
 
 /**
+ * Contexto de la build, contiene el personaje escogido, 
+ * una lista de objetos equipados y armas
  *
  * @author Manuel
- * 
  */
 public class BuildContext {
     

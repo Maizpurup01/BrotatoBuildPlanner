@@ -6,6 +6,8 @@ import BrotatoBuildPlanner.Modelo.Stats.Stat;
 import BrotatoBuildPlanner.Modelo.Stats.Stats;
 
 /**
+ * Esta clase gestiona las condiciones de que un aumento o decenso de estadisticas se aplique
+ * (ej:`+ 1 de RANGED_DAMAGE por cada 2 de MELEE_DAMAGE que se posea)
  *
  * @author Manuel
  */

@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Se encarga de gestionar si un personaje tiene aumentos en ciertas estadisticas
+ * (por ejemplo: si un personaje recibe mas mejoras de RANGED_DAMAGE que los demas, 
+ * esta clase seria la que gestiona eso)
  *
  * @author Manuel
  */

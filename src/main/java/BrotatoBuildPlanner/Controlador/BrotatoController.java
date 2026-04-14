@@ -9,6 +9,7 @@ import java.sql.Connection;
 import javax.swing.JList;
 
 /**
+ * Controlador de la aplicacion
  *
  * @author Manuel
  */

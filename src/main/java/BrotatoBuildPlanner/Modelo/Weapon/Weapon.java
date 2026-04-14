@@ -7,20 +7,22 @@ import java.util.List;
 import javax.swing.ImageIcon;
 
 /**
+ * Clase de las diferentes armas del juego(cada elemento de la tabla 
+ * weapon en BD se convertira a un objeto weapon)
  *
  * @author Manuel
  */
 public class Weapon extends Items {
 
-    private WeaponSet set1;
-    private WeaponSet set2;
-    private WeaponType type;
-    private int tier;
-    private double damage;
-    private double attackSpeed;
-    private int range;
-    private int lifesteal;
-    private List<Modifier> modifiers;
+    private WeaponSet set1; // cada arma puede tener dos sets a los que pertenece(vea WeaponSet para referencia)
+    private WeaponSet set2; // algunas armas no tienen segundo set, si eso pasa se les asigna NOTYPE para evitar nulos
+    private WeaponType type; // Tipo de arma(MELEE, RANGED, ELEMENTA, SUPPORT)
+    private int tier; // 4 tiers principales: 1. comun(gris), 2. poco comun(azul), 3. raro(morado), 4. epico(rojo)
+    private double damage; // daño base del arma
+    private double attackSpeed; // velocidad base de ataque del arma
+    private int range; // rango base de ataque del arma
+    private int lifesteal; // robo de vida base del arma, si no tiene, por defecto = 0
+    private List<Modifier> modifiers; // Las armas no tienen modificadores por si mismas, pero si lo tienen sus sets
 
     
 

@@ -1,6 +1,7 @@
 package BrotatoBuildPlanner.Modelo.Weapon;
 
 /**
+ * Enumeracion simple de los tipos de arma registrados en el juego
  *
  * @author Manuel
  */

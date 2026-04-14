@@ -4,6 +4,8 @@ import BrotatoBuildPlanner.Modelo.BuildContext;
 import BrotatoBuildPlanner.Modelo.Modifier.Modifier;
 
 /**
+ * Esta clase se encarga de calcular si el bonus de set de un arma se 
+ * aplica contando la cantidad de armas del mismo set que se encuentran en la build
  *
  * @author Manuel
  */

@@ -1,6 +1,7 @@
 package BrotatoBuildPlanner.Modelo.Weapon;
 
 /**
+ * Enumeracion de los diferentes sets que hay en el juego
  *
  * @author Manuel
  */

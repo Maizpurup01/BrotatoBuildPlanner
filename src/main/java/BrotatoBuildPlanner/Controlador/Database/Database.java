@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
+ * Clase que gestiona la conexion con la base de datos en local
  *
  * @author Manuel
  */

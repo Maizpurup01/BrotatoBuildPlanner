@@ -3,7 +3,9 @@ package BrotatoBuildPlanner.Modelo.Stats;
 import java.util.EnumMap;
 
 /**
- *
+ * Clase encargada de contener las stats calculadas 
+ * a partir de los diferentes elementos de la build
+ * 
  * @author Manuel
  */
 public class Stats {

@@ -11,7 +11,6 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * @author Manuel
  * 
  * Clase que se encarga de calcular las estadisticas de la build utilizando 
  * el metodo calculate que calcula las estadisticas mediante el metodo apply de 
@@ -19,6 +18,7 @@ import java.util.List;
  * Tambien utiliza el metodo collectModifiers para almacenar todos los 
  * modificadores y ordenarlos por prioridad antes de realizar el calculo.
  * 
+ * @author Manuel
  */
 public class BuildCalculator {
     /**

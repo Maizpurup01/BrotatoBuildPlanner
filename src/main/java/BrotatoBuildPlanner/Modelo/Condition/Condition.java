@@ -4,6 +4,7 @@ import BrotatoBuildPlanner.Modelo.BuildContext;
 import BrotatoBuildPlanner.Modelo.Stats.Stats;
 
 /**
+ * interfaz de diferentes condiciones
  *
  * @author Manuel
  */

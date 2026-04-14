@@ -6,6 +6,8 @@ import BrotatoBuildPlanner.Modelo.Weapon.Weapon;
 import BrotatoBuildPlanner.Modelo.Weapon.WeaponType;
 
 /**
+ * Esta clase gestiona las condiciones de que un modificador de set se aplique
+ * (por numero de armas del mismo set que se tengan equipadas)
  *
  * @author Manuel
  */

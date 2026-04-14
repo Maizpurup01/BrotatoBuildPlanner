@@ -6,12 +6,13 @@ import java.util.List;
 import javax.swing.ImageIcon;
 
 /**
+ * Clase en la que se convertira un registro de la tabla item en BD
  *
  * @author Manuel
  */
 public class Item extends Items {
 
-    private List<Modifier> modifiers;
+    private List<Modifier> modifiers; // modificadores del objeto, para calcular la mejora de estadisticas que proporcionan(o disminuirla)
 
     public Item(String name, String descripcion, ImageIcon imagen, int cantidad) {
         super(name, descripcion, imagen, cantidad);

@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 
 /**
+ * En esta clase se convierte un registro de la table character en BD
  *
  * @author Manuel
  */
@@ -15,7 +16,8 @@ public class Character extends Items {
 
     private List<Modifier> modifiers;
     List<StartEffect> startEffects;
-
+    
+    //personaje base para evitar nulos
     public Character() {
         super("", "",new ImageIcon(), 0);
     }

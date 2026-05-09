@@ -13,7 +13,13 @@ public class WeaponSetBonus {
     private WeaponSet type;
     private int requiredAmount;
     private Modifier modifier;
-    
+
+    public WeaponSetBonus(WeaponSet type, int requiredAmount, Modifier modifier) {
+        this.type = type;
+        this.requiredAmount = requiredAmount;
+        this.modifier = modifier;
+    }
+
     public boolean applies(BuildContext context){
         int count = 0;
         for(Weapon w : context.getWeapons()){
@@ -25,7 +31,7 @@ public class WeaponSetBonus {
             }
         }
         
-        return count == requiredAmount;
+        return count >= requiredAmount;
     }
     
     public Modifier getModifier(){

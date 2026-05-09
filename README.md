@@ -10,7 +10,7 @@
 
 Antes de ejecutar el proyecto, es necesario tener instalado:
 
-- **Java JDK 22** o superior
+- **Java JDK 25** (recomendado en este proyecto)
 - **Apache Maven**
 - Un **IDE** compatible con Java
 
@@ -45,6 +45,8 @@ El proyecto utiliza **Maven** para la gestión de dependencias.
 | Librería | Grupo | Versión |
 |----------|-------|---------|
 | SQLite JDBC | `org.xerial:sqlite-jdbc` | `3.45.1.0` |
+| JavaFX Controls | `org.openjfx:javafx-controls` | `25.0.1` |
+| JavaFX Graphics | `org.openjfx:javafx-graphics` | `25.0.1` |
 
 > Maven se encargará automáticamente de descargar todas las dependencias necesarias al compilar el proyecto.
 
@@ -67,13 +69,19 @@ Esto generará el archivo `.jar` en la carpeta `target/`.
 ### Opción 1: Desde Maven
 
 ```bash
-mvn exec:java
+mvn javafx:run
 ```
 
 ### Opción 2: Ejecutar el JAR
 
 ```bash
 java -jar target/BrotatoBuildPlanner-1.0-SNAPSHOT.jar
+```
+
+### Opción 3: Ejecutar con Maven Exec
+
+```bash
+mvn exec:java
 ```
 
 ---
@@ -94,6 +102,16 @@ El proyecto utiliza **SQLite** como base de datos local.
 
 - No requiere instalación adicional
 - La base de datos se gestiona automáticamente desde la aplicación
+
+### Poblar base de datos desde la wiki(comando para desarrollo)
+
+Para recargar personajes, items y armas desde las plantillas del wiki:
+
+```bash
+mvn -q compile org.codehaus.mojo:exec-maven-plugin:3.5.0:java '-Dexec.mainClass=BrotatoBuildPlanner.Modelo.Catalog.WikiSeeder'
+```
+
+Este comando vacía las tablas actuales y las vuelve a llenar con datos actualizados.
 
 ---
 

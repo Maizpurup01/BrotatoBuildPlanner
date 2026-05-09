@@ -36,7 +36,7 @@ public class Weapon extends Items {
         this.attackSpeed = attackSpeed;
         this.range = range;
         this.lifesteal = lifesteal;
-        this.modifiers = new ArrayList();
+        this.modifiers = new ArrayList<>();
     }
 
     public void addModifier(Modifier modifier) {
@@ -55,7 +55,7 @@ public class Weapon extends Items {
         return type;
     }
 
-    public int getTier() {
+    public int getWeaponTier() {
         return tier;
     }
 

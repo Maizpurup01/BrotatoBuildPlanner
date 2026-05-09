@@ -55,7 +55,7 @@ public class BuildCalculator {
      * context
     */
     public List<Modifier> collectModifiers(BuildContext context, List<WeaponSetBonus> weaponSetBonuses){
-        List<Modifier> modifiers = new ArrayList();
+        List<Modifier> modifiers = new ArrayList<>();
         // personaje
         if(context.getCharacter() != null){
             modifiers.addAll(context.getCharacter().getModifiers());

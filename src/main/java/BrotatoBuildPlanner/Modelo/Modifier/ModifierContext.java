@@ -12,7 +12,7 @@ import java.util.Map;
  * @author Manuel
  */
 public class ModifierContext {
-    private Map<Stat,Double> modifierMultipliers = new HashMap();
+    private Map<Stat,Double> modifierMultipliers = new HashMap<>();
     
     public double getMultiplier(Stat stat){
         return modifierMultipliers.getOrDefault(stat, 1.0);

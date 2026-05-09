@@ -1,0 +1,13 @@
+{
+  "java.jdt.ls.java.home": "C:\\Program Files\\Apache NetBeans\\jdk",
+  "java.configuration.runtimes": [
+    {
+      "name": "JavaSE-25",
+      "path": "C:\\Program Files\\Apache NetBeans\\jdk",
+      "default": true
+    }
+  ],
+  "maven.terminal.useJavaHome": true,
+  "maven.executable.path": "C:\\Program Files\\Apache NetBeans\\java\\maven\\bin\\mvn.cmd",
+  "java.configuration.updateBuildConfiguration": "automatic"
+}

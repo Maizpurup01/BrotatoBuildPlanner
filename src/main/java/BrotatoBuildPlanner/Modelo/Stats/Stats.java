@@ -13,7 +13,7 @@ public class Stats {
     private EnumMap<Stat, Double> stats;
 
     public Stats() {
-        this.stats = new EnumMap(Stat.class);
+        this.stats = new EnumMap<>(Stat.class);
     }
 
     public double getStat(Stat stat) {

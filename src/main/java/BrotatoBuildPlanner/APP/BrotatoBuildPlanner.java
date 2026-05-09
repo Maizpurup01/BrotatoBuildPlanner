@@ -1,6 +1,7 @@
 package BrotatoBuildPlanner.APP;
 
-import BrotatoBuildPlanner.Controlador.BrotatoController;
+import BrotatoBuildPlanner.Controlador.Database.CreateTables;
+import BrotatoBuildPlanner.Vista.Window;
 
 /**
  *
@@ -8,6 +9,7 @@ import BrotatoBuildPlanner.Controlador.BrotatoController;
  */
 public class BrotatoBuildPlanner {
     public static void main(String[] args) {
-        BrotatoController.iniciar();
+        CreateTables.createTables();
+        Window.launchApp(args);
     }
 }

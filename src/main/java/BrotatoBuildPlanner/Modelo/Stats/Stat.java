@@ -7,10 +7,14 @@ package BrotatoBuildPlanner.Modelo.Stats;
  */
 public enum Stat{
     MAX_HP,
+    DAMAGE,
     SPEED,
     HARVESTING,
     ATTACK_SPEED,
+    CRIT_CHANCE,
+    ARMOR,
     DODGE,
+    LUCK,
     RANGE,
     RANGED_DAMAGE,
     MELEE_DAMAGE,

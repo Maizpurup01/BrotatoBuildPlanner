@@ -1,39 +1,34 @@
 package BrotatoBuildPlanner.Vista.Renderer;
 
 import BrotatoBuildPlanner.Modelo.Item.Items;
-import java.awt.Component;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.ListCellRenderer;
+import java.util.function.Function;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.Tooltip;
 
 /**
- * Esta clase se encarga de invocar un elemento visual que permita ver un 
- * objeto con mas detalle al pasar el raton por encima en la lista
- *
- * @author Manuel
+ * Utilidades para celdas de listas JavaFX.
  */
-public class Renderer extends JLabel implements ListCellRenderer<Items>{
+public final class Renderer {
 
-    @Override
-    public Component getListCellRendererComponent(
-            JList<? extends Items> list, 
-            Items value, 
-            int index, 
-            boolean isSelected, 
-            boolean cellHasFocus) {
-        
-        setIcon(value.getImage());
-        setText("");
-        
-        if(isSelected){
-            setBackground(list.getSelectionBackground());
-            setOpaque(true);
-        }else{
-            setOpaque(false);
-        }
-        
-        return this;
+    private Renderer() {
     }
-    
-    
+
+    public static <T extends Items> ListCell<T> namedCell(Function<T, String> tooltipFormatter) {
+        return new ListCell<>() {
+            @Override
+            protected void updateItem(T item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setTooltip(null);
+                    return;
+                }
+
+                setText(item.getName());
+                if (tooltipFormatter != null) {
+                    setTooltip(new Tooltip(tooltipFormatter.apply(item)));
+                }
+            }
+        };
+    }
 }

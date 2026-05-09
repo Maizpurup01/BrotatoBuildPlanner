@@ -12,12 +12,18 @@ public class Items {
     private String description; // descripcion para el renderer
     private ImageIcon image; // imagen para UI
     private int cuantity; // cantidad maxima que se puede poseer de ese objeto en la build.
+    private ItemTier tier;
 
     public Items(String name, String description, ImageIcon image, int cuantity) {
+        this(name, description, image, cuantity, ItemTier.COMMON);
+    }
+
+    public Items(String name, String description, ImageIcon image, int cuantity, ItemTier tier) {
         this.name = name;
         this.description = description;
         this.image = image;
         this.cuantity = cuantity;
+        this.tier = tier;
     }
 
     public String getName() {
@@ -34,5 +40,14 @@ public class Items {
 
     public String getDescription() {
         return description;
+    }
+
+    public ItemTier getTier() {
+        return tier;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

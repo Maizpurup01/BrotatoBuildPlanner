@@ -56,7 +56,10 @@ public class Modifier {
                 stats.addStat(stat, current * (modifiedValue / 100));
                 break;
             case MULTIPLIER:
-                stats.multiplyStat(stat, modifiedValue);
+                modifierContext.increaseMultiplier(stat, value * times);
+                break;
+            case SPECIAL:
+                // SPECIAL modifiers require custom handling; skip in generic apply
                 break;
         }
     }

@@ -48,10 +48,10 @@ public final class SampleCatalogFactory {
 
         Character wellRounded = new Character("Well Rounded", "+5 Max HP y +5% Damage", new ImageIcon(), 1, 6);
         wellRounded.addModifier(new Modifier(Stat.MAX_HP, 5, ModifierType.FLAT, ModifierPriority.FLAT));
-        wellRounded.addModifier(new Modifier(Stat.DAMAGE, 5, ModifierType.PERCENTAGE, ModifierPriority.PERCENTAGE));
+        wellRounded.addModifier(new Modifier(Stat.DAMAGE, 5, ModifierType.FLAT, ModifierPriority.FLAT));
 
         Character oneArmed = new Character("One Armed", "Solo puede usar 1 arma", new ImageIcon(), 1, 1);
-        oneArmed.addModifier(new Modifier(Stat.ATTACK_SPEED, 200, ModifierType.PERCENTAGE, ModifierPriority.PERCENTAGE));
+        oneArmed.addModifier(new Modifier(Stat.ATTACK_SPEED, 200, ModifierType.FLAT, ModifierPriority.FLAT));
 
         Character brawler = new Character("Brawler", "Empieza con Stick", new ImageIcon(), 1, 6);
         brawler.addStartEffect(new StartWeaponEffect(stick, 1));
@@ -74,12 +74,12 @@ public final class SampleCatalogFactory {
                 ItemTier.RARE, ItemCategory.ITEM, 999);
         warriorHelmet.addModifier(new Modifier(Stat.ARMOR, 3, ModifierType.FLAT, ModifierPriority.FLAT));
         warriorHelmet.addModifier(new Modifier(Stat.MAX_HP, 5, ModifierType.FLAT, ModifierPriority.FLAT));
-        warriorHelmet.addModifier(new Modifier(Stat.SPEED, -5, ModifierType.PERCENTAGE, ModifierPriority.PERCENTAGE));
+        warriorHelmet.addModifier(new Modifier(Stat.SPEED, -5, ModifierType.FLAT, ModifierPriority.FLAT));
 
         Item gentleAlien = new Item("Gentle Alien", "+2 Max HP, +5% Damage", new ImageIcon(), 10,
                 ItemTier.COMMON, ItemCategory.LIMITED, 10);
         gentleAlien.addModifier(new Modifier(Stat.MAX_HP, 2, ModifierType.FLAT, ModifierPriority.FLAT));
-        gentleAlien.addModifier(new Modifier(Stat.DAMAGE, 5, ModifierType.PERCENTAGE, ModifierPriority.PERCENTAGE));
+        gentleAlien.addModifier(new Modifier(Stat.DAMAGE, 5, ModifierType.FLAT, ModifierPriority.FLAT));
 
         Item attackTraining = new Item("Attack Training", "Los aumentos de Damage se mejoran en 25%", new ImageIcon(), 999,
                 ItemTier.EPIC, ItemCategory.ITEM, 999);
@@ -94,7 +94,7 @@ public final class SampleCatalogFactory {
         bonuses.add(new WeaponSetBonus(WeaponSet.PRIMITIVE, 2,
                 new Modifier(Stat.MAX_HP, 5, ModifierType.FLAT, ModifierPriority.FLAT)));
         bonuses.add(new WeaponSetBonus(WeaponSet.PRIMITIVE, 4,
-                new Modifier(Stat.ATTACK_SPEED, 15, ModifierType.PERCENTAGE, ModifierPriority.PERCENTAGE)));
+                new Modifier(Stat.ATTACK_SPEED, 15, ModifierType.FLAT, ModifierPriority.FLAT)));
         bonuses.add(new WeaponSetBonus(WeaponSet.GUN, 2,
                 new Modifier(Stat.RANGED_DAMAGE, 2, ModifierType.FLAT, ModifierPriority.FLAT)));
 

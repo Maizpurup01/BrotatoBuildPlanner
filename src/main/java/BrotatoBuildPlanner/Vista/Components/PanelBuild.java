@@ -253,6 +253,10 @@ public class PanelBuild extends BorderPane {
             if (e.getButton() == MouseButton.PRIMARY && e.getClickCount() == 2) {
                 Item picked = itemList.getSelectionModel().getSelectedItem();
                 if (picked != null) {
+                    if (buildManager.getSelectedCharacter() == null) {
+                        showWarning("Personaje requerido", "Primero debes seleccionar un personaje.");
+                        return;
+                    }
                     boolean ok = buildManager.addItem(picked);
                     if (!ok) {
                         showInfo("Limite de item", "No se puede anadir mas de este item (limite alcanzado).");

@@ -579,9 +579,8 @@ public final class WikiSeeder {
         if (lower.contains("modifications are increased by") || lower.contains("modifications are reduced by")) {
             return new ParsedModifier(stat, numeric / 100.0, TYPE_MULTIPLIER, PRIORITY_BASE);
         }
-        if (lower.contains("%")) {
-            return new ParsedModifier(stat, numeric, TYPE_PERCENTAGE, PRIORITY_PERCENTAGE);
-        }
+        // En Brotato, "+X% Damage" significa sumar X al contador de Daño%,
+        // no escalar el valor actual. Todas las bonificaciones de % son planas (FLAT).
         return new ParsedModifier(stat, numeric, TYPE_FLAT, PRIORITY_FLAT);
     }
 

@@ -1,8 +1,8 @@
 package BrotatoBuildPlanner.Vista.Components;
 
+import BrotatoBuildPlanner.Controlador.BrotatoController;
 import BrotatoBuildPlanner.Modelo.BuildManager;
 import BrotatoBuildPlanner.Modelo.Catalog.GameCatalog;
-import BrotatoBuildPlanner.Modelo.Catalog.SampleCatalogFactory;
 import BrotatoBuildPlanner.Modelo.Character;
 import BrotatoBuildPlanner.Modelo.Item.Item;
 import BrotatoBuildPlanner.Modelo.Item.ItemCategory;
@@ -73,7 +73,7 @@ public class PanelBuild extends BorderPane {
 
     public PanelBuild(Stage owner) {
         this.owner = owner;
-        this.catalog = SampleCatalogFactory.create();
+        this.catalog = BrotatoController.loadCatalog();
         this.buildManager = new BuildManager(catalog);
 
         this.characterModel = FXCollections.observableArrayList();

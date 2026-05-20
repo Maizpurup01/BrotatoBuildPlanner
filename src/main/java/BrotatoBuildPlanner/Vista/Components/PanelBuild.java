@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -304,10 +306,27 @@ public class PanelBuild extends BorderPane {
     private void loadCatalogIntoLists() {
         characterModel.setAll(catalog.getCharacters());
         itemModel.setAll(catalog.getItems());
-        weaponModel.setAll(catalog.getWeapons());
+        refreshWeaponListForSelectedCharacter();
+    }
+
+    private void refreshWeaponListForSelectedCharacter() {
+        Character selected = buildManager.getSelectedCharacter();
+        if (selected == null) {
+            weaponModel.setAll(catalog.getWeapons());
+            return;
+        }
+
+        List<Weapon> filtered = new ArrayList<>();
+        for (Weapon weapon : catalog.getWeapons()) {
+            if (buildManager.canEquipWeapon(weapon)) {
+                filtered.add(weapon);
+            }
+        }
+        weaponModel.setAll(filtered);
     }
 
     private void refreshView() {
+        refreshWeaponListForSelectedCharacter();
         selectedModel.setAll(buildManager.getSelectionLines());
 
         Stats stats = buildManager.calculateBuildStats();

@@ -2,6 +2,7 @@ package BrotatoBuildPlanner.Modelo;
 
 import BrotatoBuildPlanner.Modelo.Catalog.GameCatalog;
 import BrotatoBuildPlanner.Modelo.Effects.StartEffect;
+import BrotatoBuildPlanner.Modelo.Effects.StartWeaponEffect;
 import BrotatoBuildPlanner.Modelo.Item.Item;
 import BrotatoBuildPlanner.Modelo.Modifier.Modifier;
 import BrotatoBuildPlanner.Modelo.Persistence.BuildPersistence;
@@ -9,6 +10,7 @@ import BrotatoBuildPlanner.Modelo.Stats.Stat;
 import BrotatoBuildPlanner.Modelo.Stats.Stats;
 import BrotatoBuildPlanner.Modelo.Weapon.ComputedWeaponStats;
 import BrotatoBuildPlanner.Modelo.Weapon.Weapon;
+import BrotatoBuildPlanner.Modelo.Weapon.WeaponType;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -68,6 +72,10 @@ public class BuildManager {
             return false;
         }
 
+        if (!isWeaponAllowedForCharacter(selectedCharacter, weapon)) {
+            return false;
+        }
+
         int totalWeapons = getTotalSelectedWeapons();
         if (totalWeapons >= selectedCharacter.getMaxWeaponSlots()) {
             return false;
@@ -81,6 +89,11 @@ public class BuildManager {
 
         selectedWeapons.put(weapon, current + 1);
         return true;
+    }
+
+    public boolean canEquipWeapon(Weapon weapon) {
+        return selectedCharacter != null && weapon != null
+                && isWeaponAllowedForCharacter(selectedCharacter, weapon);
     }
 
     public void resetBuild() {
@@ -262,6 +275,50 @@ public class BuildManager {
             }
         }
         return null;
+    }
+
+    private boolean isWeaponAllowedForCharacter(Character character, Weapon weapon) {
+        Set<Weapon> allowedPool = getAllowedWeaponsFromStartEffects(character);
+        if (!allowedPool.isEmpty()) {
+            return allowedPool.contains(weapon);
+        }
+
+        String description = character.getDescription();
+        if (description == null || description.isBlank()) {
+            return true;
+        }
+
+        String normalized = description.toLowerCase().replace("'", "");
+        if (normalized.contains("you cant equip weapons")) {
+            return false;
+        }
+        if (weapon.getType() == WeaponType.MELEE && normalized.contains("you cant equip melee weapons")) {
+            return false;
+        }
+        if (weapon.getType() == WeaponType.RANGED && normalized.contains("you cant equip ranged weapons")) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private Set<Weapon> getAllowedWeaponsFromStartEffects(Character character) {
+        Set<Weapon> allowed = new HashSet<>();
+
+        if (character.getStartEffects().size() <= MAX_FALLBACK_START_EFFECTS) {
+            return allowed;
+        }
+
+        for (StartEffect effect : character.getStartEffects()) {
+            if (effect instanceof StartWeaponEffect) {
+                Weapon weapon = ((StartWeaponEffect) effect).getWeapon();
+                if (weapon != null) {
+                    allowed.add(weapon);
+                }
+            }
+        }
+
+        return allowed;
     }
 
     private double getDamageBonusByType(Weapon weapon, Stats buildStats) {

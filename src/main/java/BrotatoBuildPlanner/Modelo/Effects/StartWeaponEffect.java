@@ -24,5 +24,13 @@ public class StartWeaponEffect implements StartEffect{
             context.addWeapon(weapon);
         }
     }
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
     
 }

@@ -46,6 +46,8 @@ public final class WikiSeeder {
     private static final Pattern LINK_SIMPLE_PATTERN = Pattern.compile("\\[\\[([^\\]|]+)\\]\\]");
     private static final Pattern NUMBER_PATTERN = Pattern.compile("[+-]?\\d+(?:\\.\\d+)?");
     private static final Pattern THRESHOLD_BONUS_PATTERN = Pattern.compile("\\((\\d)\\)\\s*([^()]+?)(?=\\(\\d\\)|$)");
+    private static final Pattern START_WEAPON_PATTERN =
+            Pattern.compile("(?i)you start with\\s+(\\d+)\\s+([^;,.]+)");
 
     private static final String TYPE_FLAT = "FLAT";
     private static final String TYPE_PERCENTAGE = "PERCENTAGE";
@@ -432,15 +434,15 @@ public final class WikiSeeder {
                 }
                 characterModifierTexts.put(characterId, modifierText);
 
-                String startWeapons = cleanWikiText(fields.getOrDefault("startingwpns", ""));
-                for (String weaponName : splitCommaList(startWeapons)) {
-                    Integer weaponId = weaponIds.get(weaponName.toLowerCase(Locale.ROOT));
+                Map<String, Integer> startWeapons = extractStartWeapons(description);
+                for (Map.Entry<String, Integer> startWeapon : startWeapons.entrySet()) {
+                    Integer weaponId = weaponIds.get(startWeapon.getKey().toLowerCase(Locale.ROOT));
                     if (weaponId == null) {
                         continue;
                     }
                     startWeaponSt.setInt(1, characterId);
                     startWeaponSt.setInt(2, weaponId);
-                    startWeaponSt.setInt(3, 1);
+                    startWeaponSt.setInt(3, startWeapon.getValue());
                     startWeaponSt.addBatch();
                 }
 
@@ -801,6 +803,30 @@ public final class WikiSeeder {
             }
         }
         return list;
+    }
+
+    private static Map<String, Integer> extractStartWeapons(String description) {
+        Map<String, Integer> out = new LinkedHashMap<>();
+        if (description == null || description.isBlank()) {
+            return out;
+        }
+
+        Matcher matcher = START_WEAPON_PATTERN.matcher(description);
+        while (matcher.find()) {
+            int amount = parseNullableInt(matcher.group(1), 0);
+            if (amount <= 0) {
+                continue;
+            }
+
+            String name = matcher.group(2).trim().replaceFirst("(?i)^cursed\\s+", "");
+            if (name.isBlank()) {
+                continue;
+            }
+
+            out.merge(name, amount, Integer::sum);
+        }
+
+        return out;
     }
 
     private static String cleanWikiText(String input) {

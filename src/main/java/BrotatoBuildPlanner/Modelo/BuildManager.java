@@ -16,11 +16,17 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Orquesta la build activa: seleccion, limites, calculo y persistencia.
  */
 public class BuildManager {
+    private static final Pattern START_WEAPON_PATTERN =
+            Pattern.compile("(?i)you start with\\s+(\\d+)\\s+([^;,.]+)");
+    private static final int MAX_FALLBACK_START_EFFECTS = 2;
+
     private final GameCatalog catalog;
     private final BuildCalculator calculator;
     private final BuildPersistence persistence;
@@ -203,14 +209,59 @@ public class BuildManager {
         }
 
         BuildContext ctx = new BuildContext(selectedCharacter, new ArrayList<>(), flattenWeapons(selectedWeapons));
-        for (StartEffect effect : selectedCharacter.getStartEffects()) {
-            effect.apply(ctx);
+        boolean appliedFromDescription = applyStartWeaponsFromDescription(ctx);
+        if (!appliedFromDescription
+                && selectedCharacter.getStartEffects().size() <= MAX_FALLBACK_START_EFFECTS) {
+            for (StartEffect effect : selectedCharacter.getStartEffects()) {
+                effect.apply(ctx);
+            }
         }
 
         selectedWeapons.clear();
         for (Weapon weapon : ctx.getWeapons()) {
             addWeapon(weapon);
         }
+    }
+
+    private boolean applyStartWeaponsFromDescription(BuildContext context) {
+        String description = selectedCharacter.getDescription();
+        if (description == null || description.isBlank()) {
+            return false;
+        }
+
+        boolean applied = false;
+        Matcher matcher = START_WEAPON_PATTERN.matcher(description);
+        while (matcher.find()) {
+            int amount;
+            try {
+                amount = Integer.parseInt(matcher.group(1));
+            } catch (NumberFormatException ex) {
+                continue;
+            }
+
+            String rawName = matcher.group(2).trim();
+            String normalizedName = rawName.replaceFirst("(?i)^cursed\\s+", "").trim();
+            Weapon weapon = findWeaponIgnoreCase(normalizedName);
+            if (weapon == null || amount <= 0) {
+                continue;
+            }
+
+            for (int i = 0; i < amount; i++) {
+                context.addWeapon(weapon);
+            }
+            applied = true;
+        }
+
+        return applied;
+    }
+
+    private Weapon findWeaponIgnoreCase(String weaponName) {
+        for (Weapon weapon : catalog.getWeapons()) {
+            if (weapon.getName().equalsIgnoreCase(weaponName)) {
+                return weapon;
+            }
+        }
+        return null;
     }
 
     private double getDamageBonusByType(Weapon weapon, Stats buildStats) {

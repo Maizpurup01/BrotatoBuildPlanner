@@ -1,6 +1,7 @@
 package BrotatoBuildPlanner.Modelo.Weapon;
 
 import BrotatoBuildPlanner.Modelo.Item.Items;
+import BrotatoBuildPlanner.Modelo.Item.ItemTier;
 import BrotatoBuildPlanner.Modelo.Modifier.Modifier;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class Weapon extends Items {
     private WeaponSet set1; // cada arma puede tener dos sets a los que pertenece(vea WeaponSet para referencia)
     private WeaponSet set2; // algunas armas no tienen segundo set, si eso pasa se les asigna NOTYPE para evitar nulos
     private WeaponType type; // Tipo de arma(MELEE, RANGED, ELEMENTA, SUPPORT)
-    private int tier; // 4 tiers principales: 1. comun(gris), 2. poco comun(azul), 3. raro(morado), 4. epico(rojo)
+    private int tier; // 4 tiers principales: 1 common, 2 rare, 3 epic, 4 legendary
     private double damage; // daño base del arma
     private double attackSpeed; // velocidad base de ataque del arma
     private int range; // rango base de ataque del arma
@@ -27,7 +28,7 @@ public class Weapon extends Items {
     
 
     public Weapon(String name, String description, ImageIcon image, int cuantity, WeaponSet set1, WeaponSet set2, WeaponType type, int tier, double damage, double attackSpeed, int range, int lifesteal) {
-        super(name, description, image, cuantity);
+        super(name, description, image, cuantity, ItemTier.fromRarity(tier));
         this.set1 = set1;
         this.set2 = set2;
         this.type = type;

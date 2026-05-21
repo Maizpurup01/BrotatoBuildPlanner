@@ -14,7 +14,7 @@ public class CreateTables {
 
         String[] tables = {
             "CREATE TABLE IF NOT EXISTS character (id INTEGER PRIMARY KEY, name TEXT, description TEXT, cuantity INTEGER);",
-            "CREATE TABLE IF NOT EXISTS item (id INTEGER PRIMARY KEY, name TEXT, description TEXT, cuantity INTEGER);",
+            "CREATE TABLE IF NOT EXISTS item (id INTEGER PRIMARY KEY, name TEXT, description TEXT, cuantity INTEGER, tier INTEGER);",
             "CREATE TABLE IF NOT EXISTS weapon (id INTEGER PRIMARY KEY, name TEXT, description TEXT, cuantity INTEGER, set1 TEXT, set2 TEXT, weapon_type TEXT, tier INTEGER, damage REAL, attack_speed REAL, range INTEGER, lifesteal INTEGER);",
             "CREATE TABLE IF NOT EXISTS modifier (id INTEGER PRIMARY KEY, stat TEXT, value REAL, type TEXT, priority TEXT, condition_type TEXT, condition_stat TEXT, condition_weapon_type TEXT, condition_quantity INTEGER);",
             "CREATE TABLE IF NOT EXISTS weapon_set_bonus (id INTEGER PRIMARY KEY, set_type TEXT, required_amount INTEGER, modifier_id INTEGER, FOREIGN KEY (modifier_id) REFERENCES modifier(id) ON DELETE CASCADE);",

@@ -295,7 +295,7 @@ public final class WikiSeeder {
             Map<String, String> itemCases,
             Map<Integer, String> itemModifierTexts) throws SQLException {
         int count = 0;
-        String sql = "INSERT INTO item(name, description, cuantity) VALUES(?,?,?)";
+        String sql = "INSERT INTO item(name, description, cuantity, tier) VALUES(?,?,?,?)";
 
         try (PreparedStatement st = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             for (Map.Entry<String, String> entry : itemCases.entrySet()) {
@@ -307,6 +307,7 @@ public final class WikiSeeder {
                 Map<String, String> fields = parseSwitchFields(entry.getValue());
                 String stats = cleanWikiText(fields.getOrDefault("stats", ""));
                 int limit = parseNullableInt(cleanWikiText(fields.getOrDefault("limit", "")), 999);
+                int tier = parseNullableInt(cleanWikiText(fields.getOrDefault("rarity", "1")), 1);
                 if (limit < 0) {
                     limit = 999;
                 }
@@ -314,6 +315,7 @@ public final class WikiSeeder {
                 st.setString(1, name);
                 st.setString(2, stats);
                 st.setInt(3, limit == 0 ? 1 : limit);
+                st.setInt(4, tier);
                 st.executeUpdate();
 
                 try (ResultSet rs = st.getGeneratedKeys()) {
@@ -357,10 +359,10 @@ public final class WikiSeeder {
 
                 int tier = parseNullableInt(cleanWikiText(fields.getOrDefault("rarity", "1")), 1);
 
-                double damage = parseTierNumber(fields.get("damage"), 1, 0.0);
-                double attackSpeed = parseTierNumber(fields.get("attackspeed"), 1, 1.0);
-                int range = (int) Math.round(parseTierNumber(fields.get("range"), 1, 0));
-                int lifeSteal = (int) Math.round(parseTierNumber(fields.get("lifesteal"), 1, 0));
+                double damage = parseTierNumber(fields.get("damage"), tier, 0.0);
+                double attackSpeed = parseTierNumber(fields.get("attackspeed"), tier, 1.0);
+                int range = (int) Math.round(parseTierNumber(fields.get("range"), tier, 0));
+                int lifeSteal = (int) Math.round(parseTierNumber(fields.get("lifesteal"), tier, 0));
 
                 String special = cleanWikiText(fields.getOrDefault("special", ""));
                 st.setString(1, name);
@@ -675,7 +677,7 @@ public final class WikiSeeder {
             st.execute("DROP TABLE IF EXISTS character");
 
             st.execute("CREATE TABLE IF NOT EXISTS character (id INTEGER PRIMARY KEY, name TEXT, description TEXT, cuantity INTEGER)");
-            st.execute("CREATE TABLE IF NOT EXISTS item (id INTEGER PRIMARY KEY, name TEXT, description TEXT, cuantity INTEGER)");
+            st.execute("CREATE TABLE IF NOT EXISTS item (id INTEGER PRIMARY KEY, name TEXT, description TEXT, cuantity INTEGER, tier INTEGER)");
             st.execute("CREATE TABLE IF NOT EXISTS weapon (id INTEGER PRIMARY KEY, name TEXT, description TEXT, cuantity INTEGER, set1 TEXT, set2 TEXT, weapon_type TEXT, tier INTEGER, damage REAL, attack_speed REAL, range INTEGER, lifesteal INTEGER)");
             st.execute("CREATE TABLE IF NOT EXISTS modifier (id INTEGER PRIMARY KEY, stat TEXT, value REAL, type TEXT, priority TEXT, condition_type TEXT, condition_stat TEXT, condition_weapon_type TEXT, condition_quantity INTEGER)");
             st.execute("CREATE TABLE IF NOT EXISTS weapon_set_bonus (id INTEGER PRIMARY KEY, set_type TEXT, required_amount INTEGER, modifier_id INTEGER, FOREIGN KEY (modifier_id) REFERENCES modifier(id) ON DELETE CASCADE)");

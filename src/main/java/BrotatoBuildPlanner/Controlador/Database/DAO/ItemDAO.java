@@ -6,6 +6,7 @@ import BrotatoBuildPlanner.Modelo.Item.ItemTier;
 import BrotatoBuildPlanner.Modelo.Modifier.Modifier;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -15,8 +16,8 @@ import javax.swing.ImageIcon;
 /**
  * DAO para leer items desde la BD.
  *
- * Nota: el esquema actual de la tabla item no almacena tier ni category;
- * se usan los valores por defecto COMMON / ITEM hasta que el esquema se extienda.
+ * Nota: category no se almacena aun en BD.
+ * tier se lee de BD cuando la columna existe, con fallback a COMMON.
  */
 public class ItemDAO {
 
@@ -24,14 +25,16 @@ public class ItemDAO {
         List<Item> items = new ArrayList<>();
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery("SELECT * FROM item")) {
+            boolean hasTierColumn = hasColumn(rs, "tier");
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 String description = rs.getString("description");
                 int cuantity = rs.getInt("cuantity");
+                ItemTier tier = hasTierColumn ? ItemTier.fromRarity(rs.getInt("tier")) : ItemTier.COMMON;
 
                 Item item = new Item(name, description, new ImageIcon(), cuantity,
-                        ItemTier.COMMON, ItemCategory.ITEM, cuantity);
+                        tier, ItemCategory.ITEM, cuantity);
 
                 for (Modifier m : ModifierDAO.findByItem(conn, id)) {
                     item.addModifier(m);
@@ -41,5 +44,15 @@ public class ItemDAO {
             }
         }
         return items;
+    }
+
+    private static boolean hasColumn(ResultSet rs, String columnName) throws SQLException {
+        ResultSetMetaData meta = rs.getMetaData();
+        for (int i = 1; i <= meta.getColumnCount(); i++) {
+            if (columnName.equalsIgnoreCase(meta.getColumnName(i))) {
+                return true;
+            }
+        }
+        return false;
     }
 }

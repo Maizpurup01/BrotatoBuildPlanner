@@ -21,9 +21,10 @@ public class Database {
         }
         Connection conn = null;
         try {
+            Class.forName("org.sqlite.JDBC");
             conn = DriverManager.getConnection(URL);
             System.out.println("Conectado a SQLite");
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             System.out.println(e.getMessage());
         }
 

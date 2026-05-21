@@ -8,6 +8,7 @@ import BrotatoBuildPlanner.Modelo.Item.Item;
 import BrotatoBuildPlanner.Modelo.Item.ItemCategory;
 import BrotatoBuildPlanner.Modelo.Stats.Stat;
 import BrotatoBuildPlanner.Modelo.Stats.Stats;
+import BrotatoBuildPlanner.Modelo.Item.ItemTier;
 import BrotatoBuildPlanner.Modelo.Weapon.Weapon;
 import java.io.File;
 import java.io.IOException;
@@ -219,7 +220,9 @@ public class PanelBuild extends BorderPane {
                         ? "\nLimit: " + item.getMaxStack()
                         : "";
                 setText(item.getName());
-                setTooltip(new Tooltip(item.getName() + "\n" + item.getDescription() + "\nType: " + item.getCategory() + limit));
+                setTooltip(new Tooltip(item.getName() + "\n" + item.getDescription()
+                    + "\nTier: " + formatTierLabel(item.getTier())
+                    + "\nType: " + item.getCategory() + limit));
             }
         });
 
@@ -234,9 +237,10 @@ public class PanelBuild extends BorderPane {
                 }
                 setText(item.getName());
                 setTooltip(new Tooltip(item.getName() + "\n" + item.getDescription()
-                        + "\nType: " + item.getType()
-                        + "\nSets: " + item.getSet1() + ", " + item.getSet2()
-                        + "\nBase dmg: " + df.format(item.getDamage())));
+                    + "\nTier: " + formatTierLabel(ItemTier.fromRarity(item.getWeaponTier()))
+                    + "\nType: " + item.getType()
+                    + "\nSets: " + item.getSet1() + ", " + item.getSet2()
+                    + "\nBase dmg: " + df.format(item.getDamage())));
             }
         });
     }
@@ -284,6 +288,24 @@ public class PanelBuild extends BorderPane {
                 }
             }
         });
+    }
+
+    // Devuelve una etiqueta de tier amigable
+    private String formatTierLabel(ItemTier tier) {
+        switch (tier) {
+            case COMMON:
+                return "Common";
+            case UNCOMMON:
+                return "Uncommon";
+            case RARE:
+                return "Rare";
+            case EPIC:
+                return "Epic";
+            case LEGENDARY:
+                return "Legendary";
+            default:
+                return tier.name();
+        }
     }
 
     private void onCharacterPicked(Character picked) {
